@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #222;
+  color: white;
+  height: 300vh; /* enough vertical scroll */
+}
+
+.scroll-container {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.card {
+  flex: 0 0 80vw;       /* each card takes 80% width of viewport */
+  height: 70vh;
+  margin: 0 2vw;
+  border-radius: 16px;
+  padding: 2rem;
+  box-sizing: border-box;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.red  { background: #e74c3c; }
+.teal { background: #1abc9c; }
+.blue { background: #34495e; }
+
+.card.active {
+  transform: scale(1.05);
+  opacity: 1;
+}
+.card.inactive {
+  transform: scale(0.9);
+  opacity: 0.6;
+}
