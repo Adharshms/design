@@ -1,45 +1,66 @@
 body {
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: sans-serif;
-  background: #222;
-  color: white;
-  height: 300vh; /* enough vertical scroll */
-}
-
-.scroll-container {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+  padding: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  height: 100vh;
+  background: #f5f5f5;
 }
 
-.cards {
+.main-title {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.frame {
   display: flex;
-  transition: transform 0.6s ease;
+  width: 90%;
+  max-width: 1200px;
+  height: 400px;
+  gap: 0; /* no gap between cards */
 }
 
 .card {
-  flex: 0 0 80vw;       /* each card takes 80% width of viewport */
-  height: 70vh;
-  margin: 0 2vw;
+  background: #fff;
   border-radius: 16px;
-  padding: 2rem;
-  box-sizing: border-box;
-  transition: transform 0.6s ease, opacity 0.6s ease;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: flex 1s ease; /* smooth resizing */
 }
 
-.red  { background: #e74c3c; }
-.teal { background: #1abc9c; }
-.blue { background: #34495e; }
-
-.card.active {
-  transform: scale(1.05);
-  opacity: 1;
+.card h2 {
+  font-size: 1.8rem;
+  color: #444;
+  text-align: center;
 }
-.card.inactive {
-  transform: scale(0.9);
-  opacity: 0.6;
+
+/* initial sizes */
+.card1 { flex: 7.5; }
+.card2 { flex: 1.5; }
+.card3 { flex: 1; }
+
+/* initial sizes */
+.card1 { 
+  flex: 7.5; 
+  background-color: #ff4d4d; /* red */
+}
+
+.card2 { 
+  flex: 1.5; 
+  background-color: #87ceeb; /* sky blue */
+}
+
+.card3 { 
+  flex: 1; 
+  background-color: #1e3a8a; /* dark blue */
+  color: #fff; /* white text for contrast */
+}
+.card {
+  transition: flex 0.5s ease; /* smooth resizing */
 }

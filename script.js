@@ -1,28 +1,57 @@
-const cards = document.querySelectorAll(".card");
-const totalCards = cards.length;
-const container = document.querySelector(".cards");
+const cards = [
+  document.querySelector('.card1'),
+  document.querySelector('.card2'),
+  document.querySelector('.card3')
+];
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  const viewportHeight = window.innerHeight;
+let index = 0; // current largest card
+const flexValues = [7.5, 1.5, 1]; // largest, medium, smallest
+let isScrolling = false; // prevent multiple triggers during transition
 
-  // calculate which card should be active
-  const index = Math.min(
-    Math.floor(scrollY / viewportHeight),
-    totalCards - 1
-  );
+function rotateCards(direction) {
+  if (isScrolling) return; // ignore while animating
 
-  // shift the whole row left depending on active index
-  container.style.transform = `translateX(-${index * 84}vw)`; // 80vw card + 2vw margin both sides
+  isScrolling = true;
 
-  // set active / inactive styles
-  cards.forEach((card, i) => {
-    if (i === index) {
-      card.classList.add("active");
-      card.classList.remove("inactive");
-    } else {
-      card.classList.add("inactive");
-      card.classList.remove("active");
-    }
-  });
+  if(direction === 'down'){
+    index = (index + 1) % 3; // next card
+  } else if(direction === 'up'){
+    index = (index + 2) % 3; // previous card
+  }
+
+  for(let i=0; i<3; i++){
+    cards[(i + index) % 3].style.flex = flexValues[i];
+  }
+
+  // allow next scroll after transition ends
+  setTimeout(() => {
+    isScrolling = false;
+  }, 600); // slightly longer than CSS transition (flex 0.5s)
+}
+
+// Mouse wheel / touchpad scroll
+window.addEventListener('wheel', (e) => {
+  if(e.deltaY > 0){
+    rotateCards('down');
+  } else if(e.deltaY < 0){
+    rotateCards('up');
+  }
+});
+
+// Touch events for mobile
+let touchStartY = 0;
+
+window.addEventListener('touchstart', (e) => {
+  touchStartY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchend', (e) => {
+  const touchEndY = e.changedTouches[0].clientY;
+  const deltaY = touchStartY - touchEndY;
+
+  if(deltaY > 30){ // swipe up → move forward
+    rotateCards('down');
+  } else if(deltaY < -30){ // swipe down → move backward
+    rotateCards('up');
+  }
 });
